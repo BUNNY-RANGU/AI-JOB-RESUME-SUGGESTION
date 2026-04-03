@@ -1,5 +1,5 @@
 {
-  "buildCommand": "docker build -t career-helper .",
-  "devCommand": "streamlit run frontend/app.py",
-  "installCommand": "pip install -r requirements.txt"
+  "git": {
+    "deploymentEnabled": true
+  }
 }
