@@ -56,11 +56,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar - History & Chat
+# Sidebar - History
 with st.sidebar:
-    st.markdown("<h1 style='color: #00BDD4;'>🚀 CareerAI Pro</h1>", unsafe_allow_html=True)
-    st.divider()
-    
     st.header("📋 History")
     if "history" not in st.session_state:
         st.session_state.history = []
@@ -70,44 +67,41 @@ with st.sidebar:
             st.write(f"{i+1}. {item}")
     else:
         st.write("No history yet")
-    
-    st.divider()
-    
-    # Chat section
-    st.header("💬 Career Chat")
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    
-    # Display chat history
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.write(message["content"])
-    
-    # Chat input
-    if prompt := st.chat_input("Ask about careers, jobs, or skills..."):
-        # Add user message
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        
-        # Simple responses
-        if "python" in prompt.lower():
-            response = "Python is a great skill! It's used in web development, data science, AI, and automation. Consider building projects like a web scraper or data analyzer."
-        elif "job" in prompt.lower():
-            response = "I can help you find jobs! Upload your resume to get personalized suggestions, or create a new one using the 'Create Resume' tab."
-        elif "skill" in prompt.lower():
-            response = "Key in-demand skills include: Python, JavaScript, SQL, React, and cloud platforms like AWS. What skills do you have?"
-        elif "internship" in prompt.lower():
-            response = "Internships are crucial for experience! Check LinkedIn, company websites, and university job portals. Focus on roles that match your skills."
-        else:
-            response = "I'm here to help with your career journey! Try asking about specific skills, jobs, or resume tips."
-        
-        # Add assistant response
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        
-        # Add to history
-        st.session_state.history.append(f"Asked: {prompt[:30]}...")
 
 st.title("🎯 AI Career & Opportunity Navigator")
 st.write("Leveraging AI to bridge the gap between your skills and global opportunities.")
+
+# Chat input (moved outside sidebar)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display chat history in main area
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.write(message["content"])
+
+# Chat input
+if prompt := st.chat_input("Ask about careers, jobs, or skills..."):
+    # Add user message
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    
+    # Simple responses
+    if "python" in prompt.lower():
+        response = "Python is a great skill! It's used in web development, data science, AI, and automation. Consider building projects like a web scraper or data analyzer."
+    elif "job" in prompt.lower():
+        response = "I can help you find jobs! Upload your resume to get personalized suggestions, or create a new one using the 'Create Resume' tab."
+    elif "skill" in prompt.lower():
+        response = "Key in-demand skills include: Python, JavaScript, SQL, React, and cloud platforms like AWS. What skills do you have?"
+    elif "internship" in prompt.lower():
+        response = "Internships are crucial for experience! Check LinkedIn, company websites, and university job portals. Focus on roles that match your skills."
+    else:
+        response = "I'm here to help with your career journey! Try asking about specific skills, jobs, or resume tips."
+    
+    # Add assistant response
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    
+    # Add to history
+    st.session_state.history.append(f"Asked: {prompt[:30]}...")
 
 # Tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
